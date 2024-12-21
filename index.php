@@ -9,3 +9,4 @@ $route = trim($route, '/');  // Usuwamy początkowe i końcowe ukośniki
 
 Routing::run($route);  // Uruchamiamy routing na podstawie URL
 
+
