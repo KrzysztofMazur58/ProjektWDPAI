@@ -2,13 +2,19 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #dfdfdf;
+    background-color: #ffffff;
     height: 1000px;
 }
 
 h1{
     font-family: "Hind", sans-serif;
     font-size:60px;
+    color:#ffffff;
+    margin:0;
+}
+
+h2{
+    font-size:36px;
     margin:0;
 }
 
@@ -19,42 +25,113 @@ h1{
     align-items: center;
     height: 50px;
     width: calc(100% - 80px);
-    padding: 40px; 
-    left: 0; 
+    padding: 40px;
+    left: 0;
     top: 0;
     border-bottom: 1px solid #000000;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #cecece;
+    background-color: #00235e;
 }
 
 .icons {
-    display: flex;      
-    gap: 30px;          
+    display: flex;
+    gap: 30px; /* Odstępy między ikonami */
+    justify-content: center; /* Wyśrodkowanie ikon */
+    align-items: center; /* Wyrównanie w pionie */
 }
 
 .icon-box {
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 50px;         
-    height: 50px;        
-    background-color: #89c2f8;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.icon-box:hover {
+    background-color: #e0e0e0; /* Efekt hover */
 }
 
 .icon-box i {
-    font-size: 26px;  
-    color: #0F0872      
+    font-size: 26px;
+    color: #0F0872;
+    pointer-events: none; /* Wyłączenie interakcji na ikonę */
 }
 
-.icon-box:last-child {
-    background-color: #fda0a0;
-}
-
-.icon-box:last-child i {
+/* Specjalny kolor dla ikony wylogowania */
+#logoutBox i {
     color: #ff0000;
+}
+
+/* Dostosowanie przycisku wylogowania */
+#logoutBox button {
+    background: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none; /* Lista domyślnie niewidoczna */
+}
+
+/* Elementy w rozwijanej liście */
+.dropdown-item {
+    display: block;
+
+}
+
+/* Zmiana koloru tła przy najechaniu myszką */
+.dropdown-item:hover {
+    background-color: #f5f5f5;
+}
+
+.personal-data-section {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%; /* Dostosuj, aby dopasować do layoutu */
+    width: 25%; /* 25% szerokości */
+    background-color: #ffffff;
+    padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    font-family: 'Hind', sans-serif;
+    font-size: 16px;
+}
+
+.personal-data-section h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+    color: #000000;
+}
+
+.change-data-link {
+    display: block;
+    text-align: center;
+    padding: 15px;
+    background-color: #ffffff;
+    color:#000000;
+    text-decoration: none;
+    border-top: 1px solid #000000; /* Obramowanie na górze */
+    font-weight: bold;
+}
+
+.change-data-link:last-child {
+    border-bottom: 1px solid #000000; /* Obramowanie na dole dla ostatniego elementu */
+}
+
+.change-data-link:hover {
+    background-color: #0F0872;
+    color: #ffffff;
 }
 
 .content{
@@ -62,33 +139,236 @@ h1{
     grid-template-columns: 2fr 5fr;
     grid-template-rows: 43vh 43vh;
     gap: 20px;
-    margin-top: 150px;  
-    padding: 20px; 
+    margin-top: 150px;
+    padding: 20px;
 }
 
+#calorieChart {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
 
 .chart1, .chart2, .chart3 {
-    border: 1px solid #000;  
-    border-radius: 10px; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    border: 2px solid #00235e;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.chart1{
+.chart1 {
     grid-row: span 2;
     display: flex;
     flex-direction: column;
-    font-size: 40px;
-    justify-content: end;
+    justify-content: space-around; /* Rozmieszcza elementy równomiernie */
     align-items: center;
-    padding-bottom: 300px;
+    padding: 20px;
+    font-size: 20px; /* Zmniejsz, aby więcej tekstu się zmieściło */
+    overflow: hidden; /* Zapobiega wystawaniu elementów poza kontener */
 }
 
-.chart3{
-    display: flex;              
-    justify-content: center;   
-    align-items: center;  
-    font-size: 64px;
+.chart1 .chart-item {
+    width: 90%; /* Zawartość div.chart-item zajmuje 80% szerokości kontenera */
+    max-width: 600px; /* Opcjonalne ograniczenie maksymalnej szerokości */
+    height: auto; /* Automatyczna wysokość */
+    display: flex;
+    justify-content: center; /* Centrowanie wykresu wewnątrz kontenera */
+    align-items: center;
+    padding: 10px;
 }
 
+.chart2 {
+    display: flex;                /* Ustawienie kontenera na flex */
+    justify-content: space-around; /* Rozmieszczenie wykresów równomiernie, ale z przestrzenią między nimi */
+    align-items: center;           /* Centrowanie wykresów */
+    padding: 20px;
+    font-size: 16px;
+    /* Wysokość sekcji na wykresy */
+}
 
-  
+.chart2 .chart-item {
+    display: flex;
+    flex-direction: column;        /* Wykresy i ich podpisy jeden pod drugim */
+    align-items: center;           /* Centrowanie zawartości w obrębie każdego wykresu */
+    width: 22%;                    /* Ustalenie szerokości wykresów na 30% szerokości kontenera */
+}
+
+.chart2 canvas {
+    width: 100%;   /* Ustawienie szerokości wykresu na 100% dostępnej przestrzeni */
+    height: auto;  /* Automatyczne dopasowanie wysokości, zachowując proporcje */
+}
+
+.chart2 h3 {
+    font-size: 30px;    /* Mniejsza czcionka dla podpisu */
+    margin: 10px 0;
+    text-align: center; /* Centrowanie tekstu */
+}
+
+.chart1 p {
+    margin: 10px 0;
+    font-size: 70px;
+    font-weight: 700;
+    color: #00235e;
+}
+
+.chart3 {
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.chart3 h3 {
+    margin: 10px 0;
+    font-size: 32px;
+}
+
+.chart3 #nutritionTip {
+    font-size: 18px; /* Mniejszy rozmiar dla porady */
+    margin-top: 15px;
+}
+
+.chart3 #nutritionBenefit {
+    font-size: 18px; /* Drobniejszy rozmiar czcionki dla korzyści */
+    margin-top: 10px;
+    font-weight: 400;
+    line-height: 1.6; /* Większa przestrzeń między wierszami */
+}
+
+.chart3 h4 {
+    margin: 10px 0;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.chart3 #macronutrientAdvice {
+    font-size: 18px;
+    margin-top: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .header {
+        width: calc(100% - 40px); /* Szerokość nagłówka na całą szerokość ekranu */
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px; /* Mniejszy padding */
+        height: 4vh; /* Automatyczna wysokość */
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #00235e; /* Kolor nagłówka */
+    }
+
+    .header h1 {
+        font-size: 28px; /* Zmniejszenie rozmiaru napisu */
+        margin: 0;
+    }
+
+    h2{
+        font-size:24px;
+        margin:0;
+    }
+
+    .chart3 h4 {
+        margin: 10px 0;
+        font-size: 18px;
+    }
+
+    .chart1 p {
+        margin: 10px 0;
+        font-size: 36px;/* Dodaj odstępy między wierszami tekstu */
+    }
+
+    /* Ukrywanie ikon domyślnie na urządzeniach mobilnych */
+    .icons {
+        display: none; /* Ikony są niewidoczne */
+    }
+
+    /* Ikony będą widoczne po dodaniu klasy 'visible' */
+    .icons.visible {
+        display: flex; /* Pokazuje ikony */
+        gap: 10px; /* Odstępy między ikonami */
+        justify-content: center; /* Wyśrodkowanie ikon */
+        align-items: center; /* Wyśrodkowanie w pionie */
+        transition: all 0.3s ease; /* Animacja zmiany widoczności */
+    }
+
+    /* Hamburger menu */
+    .hamburger-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        background-color: #00235e;
+        border-radius: 4px;
+    }
+
+    .hamburger-menu div {
+        width: 25px;
+        height: 3px;
+        background-color: #ffffff;
+        margin: 3px 0;
+    }
+
+    /* Ukrycie hamburgera po kliknięciu, jeśli ikony są widoczne */
+    .hamburger-menu.hidden {
+        display: none;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column; /* Ustawienie wszystkich elementów w jednej kolumnie */
+        gap: 15px; /* Mniejszy odstęp między sekcjami */
+        margin-top: 80px; /* Dostosowanie marginesu od góry, aby uniknąć nachodzenia */
+        padding: 20px; /* Mniejszy padding dla zawartości */
+    }
+
+    .chart1, .chart2, .chart3 {
+        max-width: 100%; /* Unikamy przesuwania poza ekran */
+        padding: 10px; /* Zmniejszenie paddingu */
+        font-size: 14px; /* Zmniejszenie tekstu w wykresach */
+    }
+
+    .chart2 {
+        flex-direction: column; /* Ustawienie wykresów w kolumnie */
+        align-items: center; /* Centrowanie zawartości */
+    }
+
+    .chart1 .chart-item {
+        width: 80%; /* Dostosowanie szerokości wykresów */
+        margin-bottom: 15px; /* Odstęp między wykresami */
+    }
+
+    .chart2 .chart-item {
+        width: 80%; /* Dostosowanie szerokości wykresów */
+        margin-bottom: 15px; /* Odstęp między wykresami */
+    }
+
+    .chart3 {
+        padding: 10px; /* Zmniejszenie paddingu */
+    }
+
+    .chart3 h3 {
+        font-size: 18px; /* Zmniejszenie czcionki */
+    }
+
+    .icon-box {
+        width: 30px; /* Zmniejszenie szerokości i wysokości ikon */
+        height: 30px;
+    }
+
+    .icon-box i {
+        font-size: 18px; /* Zmniejszenie rozmiaru ikon */
+    }
+
+    .personal-data-section {
+        width: 50%; /* 25% szerokości */
+    }
+
+}

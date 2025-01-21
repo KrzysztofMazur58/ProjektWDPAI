@@ -1,26 +1,17 @@
 <?php
-
+ob_start();
 require_once 'AppController.php';
 require_once __DIR__ . '/../model/User.php';
+require_once __DIR__ . '/../repository/UserRepository.php';
+require_once __DIR__ . '/../repository/UserSecurityRepository.php';
 
 class SecurityController extends AppController {
-    private $users = [];
+    private $userRepository;
+    private $userSecurityRepository;
 
     public function __construct() {
-        session_start(); // Rozpocznij sesję
-
-        // Sprawdź, czy użytkownicy są zapisani w sesji
-        if (!isset($_SESSION['users'])) {
-            $_SESSION['users'] = [];
-        }
-
-        // Przypisz użytkowników z sesji do $this->users
-        $this->users = &$_SESSION['users'];
-
-    }
-
-    public function getUsers() {
-        return $this->users;
+        $this->userRepository = new UserRepository();
+        $this->userSecurityRepository = new UserSecurityRepository();
     }
 
     public function login() {
@@ -28,17 +19,17 @@ class SecurityController extends AppController {
             return $this->render('login');
         }
 
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $email = $_POST['email'] ?? null;
+        $password = $_POST['password'] ?? null;
 
-        if (isset($this->users[$email])) {
-            $user = $this->users[$email];
+        if (!$email || !$password) {
+            return $this->render('login', ['error' => 'Please enter both email and password.']);
+        }
 
-            if (password_verify($password, $user->getPassword())) {
-                $_SESSION['user'] = ['email' => $user->getEmail()];
-                header('Location: /user_details');
-                exit();
-            }
+        $user = $this->userRepository->findByEmail($email);
+
+        if ($user && password_verify($password, $user->getPassword())) {
+            return $this->handleSuccessfulLogin($user);
         }
 
         return $this->render('login', ['error' => 'Invalid email or password.']);
@@ -49,36 +40,49 @@ class SecurityController extends AppController {
             return $this->render('register');
         }
 
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $confirmPassword = $_POST['confirm_password'];
-        $name = $_POST['first_name'];
-        $surname = $_POST['last_name'];
+        $email = $_POST['email'] ?? null;
+        $password = $_POST['password'] ?? null;
+        $confirmPassword = $_POST['confirm_password'] ?? null;
+        $name = $_POST['first_name'] ?? null;
+        $surname = $_POST['last_name'] ?? null;
 
         if ($password !== $confirmPassword) {
             return $this->render('register', ['error' => 'Passwords do not match!']);
         }
 
-        if (isset($this->users[$email])) {
+        if ($this->userRepository->findByEmail($email)) {
             return $this->render('register', ['error' => 'Email is already taken!']);
         }
 
-        // Dodaj użytkownika do sesji
-        $this->users[$email] = new User(
+        $user = new User(
             $email,
             password_hash($password, PASSWORD_BCRYPT),
             $name,
             $surname
         );
 
-        header("Location: /login");
+        $this->userRepository->save($user);
+
+        header("Location: /user_details");
         exit();
     }
+
+    private function handleSuccessfulLogin(User $user) {
+        $isAdmin = $this->checkIfUserIsAdmin($user);
+
+        setcookie('user', json_encode([
+            'id' => $user->getId(),
+            'first_name' => $user->getFirstName(),
+            'timestamp' => time(),
+            'isAdmin' => $isAdmin
+        ]), time() + 1200, "/");
+
+        header('Location: /dashboard');
+        exit();
+    }
+
+    private function checkIfUserIsAdmin(User $user) {
+        $role = $this->userSecurityRepository->getUserRole($user->getId());
+        return $role === 'admin';
+    }
 }
-
-
-
-
-
-
-

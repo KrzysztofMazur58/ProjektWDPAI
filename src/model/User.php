@@ -1,37 +1,62 @@
 <?php
-// classes/User.php
 
 class User {
+    private $id;
     private $email;
     private $password;
-    private $name;
-    private $surname;
+    private $firstName;
+    private $lastName;
 
-    public function __construct($email, $password, $name, $surname) {
+    public function __construct($email, $password, $firstName, $lastName) {
         $this->email = $email;
         $this->password = $password;
-        $this->name = $name;
-        $this->surname = $surname;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
     }
 
-    // Getter dla emaila
     public function getEmail() {
         return $this->email;
     }
 
-    // Getter dla hasła
     public function getPassword() {
         return $this->password;
     }
 
-    // Getter dla imienia
-    public function getName() {
-        return $this->name;
+    public function getId() {
+        return $this->id;
     }
 
-    // Getter dla nazwiska
-    public function getSurname() {
-        return $this->surname;
+    public function getFirstName() {
+        return $this->firstName;
     }
+
+    public function getLastName() {
+        return $this->lastName;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
 }
-?>

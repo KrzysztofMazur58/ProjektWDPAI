@@ -1,15 +1,13 @@
 :root {
     --d-9-d-9-d-9: #226098;
 }
-html{
-    overflow-y: auto;
-}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #dfdfdf;
-    overflow-y: auto;
+    height: 100vh;
     background: var(--d-9-d-9-d-9, linear-gradient(180deg, #226098 0%, #399FFE 100%));
 }
 
@@ -82,40 +80,24 @@ p{
 }
 
 
-.login-form {
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 630px;
-    height: 520px; /* Inna wysokość dla logowania */
+    height: 520px;
     border: 2px solid #0F0872;
     border-radius: 15px;
     gap: 18px;
     padding: 20px;
 }
 
-.login-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 630px;
-    height: 520px; /* Inna wysokość dla logowania */
-    border: 2px solid #0F0872;
-    border-radius: 15px;
-    gap: 18px;
-    padding: 20px;
+.register-form{
+    height: 772px;
 }
 
-.user-details-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 630px;
+.user-details-form{
     height: 632px;
-    border: 2px solid #0F0872;
-    border-radius: 15px;
-    gap: 18px;
-    padding: 20px;
 }
 
 .input-field {
@@ -180,22 +162,15 @@ p{
         font-size: 48px;
     }
 
-    h2 {
-        font-size: 30px;
+    h2, p {
+        font-size: 24px;
         letter-spacing: 1px;
-    }
-
-    p{
-        font-size: 20px;
     }
 
     .container {
         flex-direction: column;
-        height: 100vh; /* Zajmuje pełną wysokość ekranu */
-        padding: 0 20px;
-        display: flex;
-        align-items: center; /* Wyśrodkowanie w poziomie */
-        justify-content: center; /* Wyśrodkowanie w pionie */
+        height: auto;
+        padding: 20px;
     }
 
     .left-section, .right-section {
@@ -215,19 +190,7 @@ p{
         font-size: 140px;
     }
 
-    .login-form {
-        width: 90%; /* Zajmuje 90% szerokości ekranu */
-        height: auto;
-        padding: 15px;
-    }
-
-    .register-form {
-        width: 90%; /* Zajmuje 90% szerokości ekranu */
-        height: auto;
-        padding: 15px;
-    }
-
-    .user-details-form {
+    form {
         width: 90%; /* Zajmuje 90% szerokości ekranu */
         height: auto;
         padding: 15px;
@@ -239,20 +202,14 @@ p{
         height: 50px;
     }
 
-    .input-field::placeholder {
-        font-size: 20px;
-    }
-
     .continue-button, .register-button {
         width: 100%;
         height: 50px;
-        font-size: 20px;
+        font-size: 24px;
     }
 
     .error-message {
-        font-size: 14px;
-        padding: 5px;
+        font-size: 16px;
+        padding: 10px;
     }
 }
-
-

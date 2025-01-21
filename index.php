@@ -2,11 +2,9 @@
 
 require_once 'Routing.php';
 
-$path = $_SERVER['REQUEST_URI'];  // Pobieramy pełną ścieżkę URL
+$path = $_SERVER['REQUEST_URI'];
 
-$route = parse_url($path, PHP_URL_PATH);  // Wyciągamy ścieżkę URL
-$route = trim($route, '/');  // Usuwamy początkowe i końcowe ukośniki
+$route = parse_url($path, PHP_URL_PATH);
+$route = trim($route, '/');
 
-Routing::run($route);  // Uruchamiamy routing na podstawie URL
-
-
+Routing::run($route);

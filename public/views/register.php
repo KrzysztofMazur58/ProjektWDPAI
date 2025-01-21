@@ -8,15 +8,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind&family=Jomhuria&family=Kaushan+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="/public/styles/login.css">
+    <link rel="stylesheet" href="/public/styles/register.css">
 </head>
 <body>
 <div class="container">
-    <div class="form-section">
+    <div class="right-section">
         <form action="/register" method="POST" class="register-form">
             <h2>Create an Account</h2>
 
-            <!-- Sekcja na komunikat błędu -->
+            <!-- Error message section -->
             <?php if (!empty($error)): ?>
                 <div class="error-message">
                     <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
@@ -31,13 +31,16 @@
 
             <button type="submit" class="continue-button">Register</button>
             <p>Already have an account?</p>
-            <!-- Zmieniamy na button, aby nie wysyłał formularza -->
             <button type="button" class="register-button" onclick="window.location.href='/login'">Login</button>
         </form>
     </div>
 </div>
 </body>
 </html>
+
+
+
+
 
 
 

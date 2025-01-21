@@ -12,32 +12,32 @@
 </head>
 <body>
 <div class="container">
-    <div class="form-section">
-        <form action="/user_details" method="POST" class="user-details-form">
-            <h2>Tell us about you</h2>
+    <form action="/user_details" method="POST" class="user-details-form">
+        <h2>Complete your profile</h2>
 
-            <select name="gender" class="input-field" required>
-                <option value="" disabled selected>Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-            </select>
+        <!-- Inne pola formularza -->
+        <select name="gender" class="input-field" required>
+            <option value="" disabled selected>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
 
-            <input type="number" name="height" placeholder="Height (cm)" class="input-field" required>
-            <input type="number" name="weight" placeholder="Weight (kg)" class="input-field" required>
-            <input type="number" name="age" placeholder="Age" class="input-field" required>
+        <input type="number" name="height" placeholder="Height (cm)" class="input-field" required>
+        <input type="number" name="weight" placeholder="Weight (kg)" class="input-field" required>
+        <input type="number" name="age" placeholder="Age" class="input-field" required>
 
-            <select name="activity_level" class="input-field" required>
-                <option value="" disabled selected>Activity Level</option>
-                <option value="sedentary">Sedentary</option>
-                <option value="light">Light Activity</option>
-                <option value="moderate">Moderate Activity</option>
-                <option value="active">Active</option>
-                <option value="very_active">Very Active</option>
-            </select>
+        <select name="activity_level" class="input-field" required>
+            <option value="" disabled selected>Activity Level</option>
+            <option value="1">Sedentary</option>
+            <option value="2">Light Activity</option>
+            <option value="3">Moderate Activity</option>
+            <option value="4">Active</option>
+            <option value="5">Very Active</option>
+        </select>
 
-            <button type="submit" class="continue-button">Continue</button>
-        </form>
-    </div>
+        <button type="submit" class="continue-button">Continue</button>
+    </form>
 </div>
 </body>
 </html>
+

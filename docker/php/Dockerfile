@@ -35,3 +35,11 @@ RUN echo 'memory_limit = -1' >> /usr/local/etc/php/conf.d/memory-limit.ini
 COPY . /app
 
 VOLUME ["/app"]
+
+
+RUN echo 'memory_limit = -1' >> /usr/local/etc/php/conf.d/memory-limit.ini
+
+# Copy the application code
+COPY . /app
+
+VOLUME ["/app"]
