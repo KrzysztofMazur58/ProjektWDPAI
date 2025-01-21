@@ -13,6 +13,7 @@ NutriTrack to aplikacja internetowa stworzona z myślą o osobach dbających o z
 ## Technologie użyte w projekcie
 
 - **Backend:**
+<<<<<<< HEAD
     - **PHP** – Główny język programowania używany do logiki aplikacji.
     - **PostgresSQL** – Baza danych przechowująca dane użytkowników i ich codzienne raporty dotyczące diety.
     - **JSON** – Wykorzystywany do zarządzania danymi przechowywanymi w ciasteczkach.
@@ -49,4 +50,5 @@ NutriTrack jest idealnym rozwiązaniem dla osób, które chcą w sposób zorgani
 ---
 
 NutriTrack – Twoje zdrowie w Twoich rękach!
+
 
