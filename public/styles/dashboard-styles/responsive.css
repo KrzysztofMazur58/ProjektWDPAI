@@ -1,0 +1,116 @@
+@media (max-width: 768px) {
+    .header {
+        width: calc(100% - 40px);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        height: 4vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #00235e;
+    }
+
+    .header h1 {
+        font-size: 28px;
+        margin: 0;
+    }
+
+    h2{
+        font-size:24px;
+        margin:0;
+    }
+
+    .chart3 h4 {
+        margin: 10px 0;
+        font-size: 18px;
+    }
+
+    .chart1 p {
+        margin: 10px 0;
+        font-size: 36px;
+    }
+
+    .icons {
+        display: none;
+    }
+
+    .icons.visible {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+    /* Hamburger menu */
+    .hamburger-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        background-color: #00235e;
+        border-radius: 4px;
+    }
+
+    .hamburger-menu div {
+        width: 25px;
+        height: 3px;
+        background-color: #ffffff;
+        margin: 3px 0;
+    }
+
+    .hamburger-menu.hidden {
+        display: none;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 80px;
+        padding: 20px;
+    }
+
+    .chart1, .chart2, .chart3 {
+        max-width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .chart2 {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .chart1 .chart-item .chart2 .chart-item{
+        width: 80%;
+        margin-bottom: 15px;
+    }
+
+    .chart3 {
+        padding: 10px;
+    }
+
+    .chart3 h3 {
+        font-size: 18px;
+    }
+
+    .icon-box {
+        width: 30px;
+        height: 30px;
+    }
+
+    .icon-box i {
+        font-size: 18px;
+    }
+
+    .personal-data-section {
+        width: 50%;
+    }
+
+}

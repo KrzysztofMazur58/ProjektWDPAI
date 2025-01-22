@@ -8,14 +8,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind&family=Jomhuria&family=Kaushan+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="/public/styles/login.css">
+    <link rel="stylesheet" href="/public/styles/common.css">
+    <link rel="stylesheet" href="/public/styles/user-details.css">
+
 </head>
 <body>
 <div class="container">
     <form action="/user_details" method="POST" class="user-details-form">
         <h2>Complete your profile</h2>
 
-        <!-- Inne pola formularza -->
         <select name="gender" class="input-field" required>
             <option value="" disabled selected>Select Gender</option>
             <option value="male">Male</option>

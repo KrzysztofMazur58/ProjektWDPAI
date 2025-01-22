@@ -1,16 +1,16 @@
 html {
-    min-height: 100%; /* Gradient rozciąga się na całą stronę */
+    min-height: 100%;
     background: linear-gradient(180deg, #226098 0%, #399FFE 100%);
-    background-attachment: fixed; /* Tło jest stałe podczas przewijania */
+    background-attachment: fixed;
     background-repeat: no-repeat;
     font-family: 'Hind', sans-serif;
 }
 
 body {
-    min-height: 100%; /* Cała zawartość ma być pokryta gradientem */
+    min-height: 100%;
     margin: 0;
     padding: 0;
-    background: transparent; /* Przeźroczyste, żeby widać było gradient z html */
+    background: transparent;
     display: flex;
     flex-direction: column;
 }
@@ -18,7 +18,7 @@ body {
 .users-list {
     display: block;
     padding: 20px;
-    padding-top: 60px; /* Dodatkowy padding od góry dla strzałki */
+    padding-top: 60px;
     justify-content: center;
 }
 
@@ -26,8 +26,8 @@ body {
     background-color: #fff;
     border: 1px solid #ccc;
     padding: 20px;
-    width: 60%; /* Increase width for wider cards */
-    margin-bottom: 20px; /* Add spacing between the cards */
+    width: 60%;
+    margin-bottom: 20px;
     text-align: center;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -92,27 +92,27 @@ body {
 
 @media (max-width: 768px) {
     .user-card {
-        width: 90%; /* Karty zajmują 90% szerokości ekranu */
-        padding: 15px; /* Zmniejszamy padding */
-        font-size: 14px; /* Zmniejszamy tekst */
+        width: 90%;
+        padding: 15px;
+        font-size: 14px;
     }
 
     .user-card h3 {
-        font-size: 12px; /* Dostosowanie rozmiaru nagłówka */
+        font-size: 12px;
     }
 
     .user-card p {
-        font-size: 12px; /* Mniejszy tekst w opisie */
+        font-size: 12px;
     }
 
     .back-btn {
-        font-size: 20px; /* Zmniejszenie przycisku powrotu */
+        font-size: 20px;
         top: 10px;
         left: 10px;
     }
 
     .delete-btn {
-        font-size: 12px; /* Zmniejszenie ikony usuwania */
+        font-size: 12px;
         top: 10px;
         right: 10px;
     }

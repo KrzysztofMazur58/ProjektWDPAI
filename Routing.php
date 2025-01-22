@@ -12,6 +12,7 @@ class Routing {
         "register" => [SecurityController::class, 'register'],
         "dashboard" => [DashboardController::class, 'dashboard'],
         "user_details" => [UserController::class, 'userDetails'],
+        "my_profile" => [UserController::class, 'myProfile'], // Dodajemy nową trasę
         "logout" => [DashboardController::class, 'logout'],
         "admin_dashboard" => [DashboardController::class, 'admin_dashboard'],
         "delete_user" => [DashboardController::class, 'deleteUser'],
@@ -25,12 +26,12 @@ class Routing {
             $controller = new $controllerClass();
             $controller->$method();
         } else {
-
             $errorController = new ErrorController();
             $errorController->error404();
         }
     }
 }
+
 
 
 

@@ -103,4 +103,25 @@ class UserDetailsRepository {
         }
     }
 
+    public function findByUserId($userId) {
+        $stmt = $this->db->prepare("
+        SELECT u.first_name, u.last_name, u.email, ud.height, ud.weight, ud.gender, al.level_name AS activity_level, ud.age 
+        FROM users u
+        JOIN user_details ud ON u.id = ud.user_id
+        LEFT JOIN activity_levels al ON ud.activity_level_id = al.id
+        WHERE u.id = :user_id
+    ");
+
+        $stmt->bindParam(':user_id', $userId);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return $result;
+        }
+
+        return null;
+    }
+
 }

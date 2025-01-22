@@ -1,0 +1,105 @@
+.chart1, .chart2, .chart3 {
+    border: 2px solid #00235e;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.chart1 {
+    grid-row: span 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 20px;
+    overflow: hidden;
+}
+
+.chart2 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 16px;
+}
+
+.chart3 {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.chart1 .chart-item, .chart2 .chart-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.chart1 .chart-item {
+    width: 85%;
+    max-width: 600px;
+}
+
+.chart2 .chart-item {
+    flex-direction: column;
+    align-items: center;
+    width: 22%;
+}
+
+.chart2 canvas {
+    width: 100%;
+    height: auto;
+}
+
+.chart1 p {
+    margin: 10px 0;
+    font-size: 70px;
+    font-weight: 700;
+    color: #00235e;
+}
+
+.chart2 h3, .chart3 h3, .chart3 h4 {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.chart2 h3 {
+    font-size: 30px;
+}
+
+.chart3 h3 {
+    font-size: 32px;
+}
+
+.chart3 h4 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.chart3 #nutritionTip, .chart3 #nutritionBenefit, .chart3 #macronutrientAdvice {
+    font-size: 18px;
+    margin-top: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.chart3 #nutritionTip {
+    font-size: 18px;
+}
+
+.chart3 #nutritionBenefit {
+    font-weight: 400;
+    margin-top: 10px;
+}
+
+.chart3 #macronutrientAdvice {
+    font-weight: 400;
+    margin-top: 0;
+}
+
+#calorieChart {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+

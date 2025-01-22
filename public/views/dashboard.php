@@ -8,8 +8,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="/public/styles/add_meal.css">
-    <link rel="stylesheet" href="/public/styles/dashboard.css">
+    <link rel="stylesheet" href="/public/styles/dashboard-styles/add_meal.css">
+    <link rel="stylesheet" href="/public/styles/dashboard-styles/base.css">
+    <link rel="stylesheet" href="/public/styles/dashboard-styles/header.css">
+    <link rel="stylesheet" href="/public/styles/dashboard-styles/icons.css">
+    <link rel="stylesheet" href="/public/styles/dashboard-styles/charts.css">
+    <link rel="stylesheet" href="/public/styles/dashboard-styles/modal.css">
+    <link rel="stylesheet" href="/public/styles/dashboard-styles/responsive.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
@@ -35,6 +40,8 @@
                 <div class="dropdown-menu" id="settingsMenu">
                     <div class="personal-data-section">
                         <h2>Settings</h2>
+                        <a href="/my_profile" class="change-data-link">My Profile</a>
+
                         <a href="/user_details" class="change-data-link">Change Personal Data</a>
 
                         <?php if ($this->isAdmin()): ?>
@@ -88,7 +95,7 @@
     </div>
 </div>
 
-<!-- Modal - formularz dodawania posiłku -->
+
 <div id="mealModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -107,67 +114,10 @@
     </div>
 </div>
 
-
-<script>
-    // Kliknięcie na cały box otwiera modal
-    document.getElementById("addMealBox").addEventListener("click", function () {
-        document.getElementById("mealModal").style.display = "flex";
-    });
-
-    document.getElementById("settingsBox").addEventListener("click", function (event) {
-        const menu = document.getElementById("settingsMenu");
-        menu.style.display = (menu.style.display === "block") ? "none" : "block";
-
-        event.stopPropagation();
-    });
-
-    window.onclick = function (event) {
-        if (event.target == document.getElementById("mealModal")) {
-            document.getElementById("mealModal").style.display = "none";
-        }
-    };
-
-    window.addEventListener("click", function () {
-        const menu = document.getElementById("settingsMenu");
-        if (menu.style.display === "block") {
-            menu.style.display = "none";
-        }
-    });
-
-    // Find the hamburger menu and the icons
-    const hamburgerMenu = document.querySelector('.hamburger-menu');
-    const icons = document.querySelector('.icons');
-
-    // Toggle visibility of icons when clicking hamburger menu
-    document.addEventListener('DOMContentLoaded', function () {
-        const hamburgerMenu = document.querySelector('.hamburger-menu');
-        const icons = document.querySelector('.icons');
-
-        // Dodajemy nasłuchiwanie na kliknięcie w hamburgera
-        hamburgerMenu.addEventListener('click', function(event) {
-            event.stopPropagation();  // Zapobieganie propagacji zdarzenia
-
-            // Toggle klasy 'visible' dla ikon i 'active' dla hamburgera
-            icons.classList.toggle('visible');
-            hamburgerMenu.classList.toggle('active');
-            hamburgerMenu.classList.toggle('hidden');  // Ukrycie hamburgera po kliknięciu
-        });
-
-        // Ukrywanie menu, jeśli klikniesz poza nim
-        window.addEventListener('click', function(event) {
-            if (!hamburgerMenu.contains(event.target) && !icons.contains(event.target)) {
-                icons.classList.remove('visible');
-                hamburgerMenu.classList.remove('active');
-                hamburgerMenu.classList.remove('hidden');  // Przywrócenie hamburgera, jeśli klikniesz poza menu
-            }
-        });
-    });
-
-
-</script>
-
+<script src="public/scripts/dashboard.js"></script>
 <script src="public/scripts/charts.js"></script>
 <script src="public/scripts/name.js"></script>
+
 </body>
 </html>
 

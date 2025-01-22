@@ -1,6 +1,6 @@
 let consumedCalories = 0;
 let remainingCalories = 0;
-let myChart = null;
+
 let dailyCalories = 0;
 let userId = 0;
 
@@ -15,6 +15,45 @@ let dailyCarbs = 0;
 let servingWeight = 0;
 
 let charts = {};
+
+function drawChart(chartId, consumed, daily, color1, color2) {
+    const ctx = document.getElementById(chartId).getContext('2d');
+
+    if (charts[chartId]) charts[chartId].destroy();
+
+    // Tworzymy nowy wykres
+    charts[chartId] = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                label: chartId,
+                data: [consumed, Math.max(0, daily - consumed)],
+                backgroundColor: [color1, color2],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                tooltip: { enabled: true }
+            },
+            animation: {
+                duration: 1000,
+                easing: 'easeInOutQuad'
+            }
+        }
+    });
+}
+
+function updateCharts() {
+
+    drawChart('calorieChart', consumedCalories, dailyCalories, '#3AA0FE', '#0F0872');
+    drawChart('proteinChart', consumedProtein, dailyProtein, '#3AA0FE', '#0F0872');
+    drawChart('fatChart', consumedFat, dailyFat, '#3AA0FE', '#0F0872');
+    drawChart('carbsChart', consumedCarbs, dailyCarbs, '#3AA0FE', '#0F0872');
+
+}
 
 function fetchUserData() {
     fetch('getUserData.php', {
@@ -38,110 +77,18 @@ function fetchUserData() {
             dailyCarbs = data.daily_carbs || 0;
             consumedCarbs = data.consumed_carbs || 0;
 
-            remainingCalories = Math.max(0, dailyCalories - consumedCalories);
 
             document.getElementById("remainingCalories").innerText =
-                `${Math.round(remainingCalories)} / ${Math.round(dailyCalories)}`;
+                `${Math.round(consumedCalories)} / ${Math.round(dailyCalories)}`;
 
-            updateChart();
-            updateMacronutrientCharts();
+            updateCharts();
             getMacronutrientAdvice();
+            getNutritionTip();
         })
         .catch(error => {
             console.error('Error:', error);
             alert('There was a problem fetching user data.');
         });
-}
-
-function saveConsumedCalories() {
-    fetch('updateCalories.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            user_id: userId,
-            consumedCalories,
-            consumedProtein,
-            consumedFat,
-            consumedCarbs
-        })
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (!data.success) {
-                alert('Error saving data.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('There was a problem saving data.');
-        });
-}
-
-function initChart() {
-    const ctx = document.getElementById('calorieChart').getContext('2d');
-    if (myChart) myChart.destroy();
-
-    myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                label: 'Calories',
-                data: [Math.round(consumedCalories), Math.round(remainingCalories)],
-                backgroundColor: ['#3AA0FE', '#0F0872'],
-                borderWidth: 1,
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'top' },
-                tooltip: { enabled: true }
-            }
-        }
-    });
-}
-
-function updateChart() {
-    if (myChart) {
-        myChart.data.datasets[0].data = [Math.round(consumedCalories), Math.round(remainingCalories)];
-        myChart.update();
-    }
-}
-
-function initMacronutrientCharts() {
-    updateSingleChart('proteinChart', consumedProtein, dailyProtein, '#3AA0FE', '#0F0872');
-    updateSingleChart('fatChart', consumedFat, dailyFat, '#3AA0FE', '#0F0872');
-    updateSingleChart('carbsChart', consumedCarbs, dailyCarbs, '#3AA0FE', '#0F0872');
-}
-
-function updateMacronutrientCharts() {
-    updateSingleChart('proteinChart', consumedProtein, dailyProtein, '#3AA0FE', '#0F0872');
-    updateSingleChart('fatChart', consumedFat, dailyFat, '#3AA0FE', '#0F0872');
-    updateSingleChart('carbsChart', consumedCarbs, dailyCarbs, '#3AA0FE', '#0F0872');
-}
-
-function updateSingleChart(chartId, consumed, daily, color1, color2) {
-    const ctx = document.getElementById(chartId).getContext('2d');
-    if (charts[chartId]) charts[chartId].destroy();
-
-    charts[chartId] = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                label: chartId,
-                data: [consumed, Math.max(0, daily - consumed)],
-                backgroundColor: [color1, color2],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'top' },
-                tooltip: { enabled: true }
-            }
-        }
-    });
 }
 
 function addProduct() {
@@ -178,14 +125,11 @@ function addProduct() {
                     servingWeight = mealWeight;
                 }
 
-                remainingCalories = Math.max(0, dailyCalories - consumedCalories);
-
                 document.getElementById("remainingCalories").innerText =
-                    `${Math.round(remainingCalories)} / ${Math.round(dailyCalories)}`;
+                    `${Math.round(consumedCalories)} / ${Math.round(dailyCalories)}`;
 
                 saveConsumedCalories();
-                updateChart();
-                updateMacronutrientCharts();
+                updateCharts();
                 getMacronutrientAdvice();
 
                 const addedMealMessage = document.getElementById("addedMealMessage");
@@ -201,37 +145,59 @@ function addProduct() {
         });
 }
 
+function saveConsumedCalories() {
+    fetch('updateCalories.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            user_id: userId,
+            consumedCalories,
+            consumedProtein,
+            consumedFat,
+            consumedCarbs
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success) {
+                alert('Error saving data.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was a problem saving data.');
+        });
+}
+
 function getNutritionTip() {
     const hour = new Date().getHours();
-    let tip = "";
-    let benefit = "";
 
-    if (hour >= 6 && hour < 10) {
-        tip = "🍳 Start your day with a high-protein breakfast!";
-        benefit = "✅ Boosts muscle mass and keeps you full.";
-    } else if (hour >= 10 && hour < 14) {
-        tip = "🥗 Time for a balanced lunch!";
-        benefit = "✅ Stabilizes energy and supports focus.";
-    } else if (hour >= 14 && hour < 18) {
-        tip = "🕒 Mid-afternoon snack!";
-        benefit = "✅ Prevents energy crashes.";
-    } else if (hour >= 18 && hour < 21) {
-        tip = "🍽️ Dinner should be light and easy to digest.";
-        benefit = "✅ Promotes better sleep.";
-    } else {
-        tip = "🌙 Avoid heavy meals late at night.";
-        benefit = "✅ Supports better sleep quality.";
-    }
+    console.log(`Current hour: ${hour}`);
 
-    document.getElementById("nutritionTip").innerText = tip;
-    document.getElementById("nutritionBenefit").innerText = benefit;
+    fetch(`nutri.php?hour=${hour}`)
+        .then(response => {
+
+            return response.json();
+        })
+        .then(data => {
+
+            if (data.error) {
+                console.error('API Error:', data.error);
+            } else {
+
+                document.getElementById("nutritionTip").innerText = data.tip;
+                document.getElementById("nutritionBenefit").innerText = data.benefit;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching nutrition tip:', error);
+        });
 }
 
 function getMacronutrientAdvice() {
     let advice = "";
     const hour = new Date().getHours();
 
-    // Upewnij się, że dane są dostępne, zanim obliczymy porady
     if (dailyProtein && dailyFat && dailyCarbs && consumedProtein >= 0 && consumedFat >= 0 && consumedCarbs >= 0) {
 
         const proteinPercentage = (consumedProtein / dailyProtein) * 100;
@@ -243,55 +209,55 @@ function getMacronutrientAdvice() {
 
         if (proteinPercentage > 100) {
             isOver = true;
-            advice += "💪 Your protein intake is over 100%. You may want to adjust your protein intake to avoid excess.";
+            advice += "💪 Your protein intake is over 100%. You may want to adjust your protein intake to avoid excess.\n";
         }
         if (fatPercentage > 100) {
             isOver = true;
-            advice += "\n🥑 Your fat intake is over 100%. Be cautious with your fat intake to prevent overconsumption.";
+            advice += "🥑 Your fat intake is over 100%. Be cautious with your fat intake to prevent overconsumption.\n";
         }
         if (carbsPercentage > 100) {
             isOver = true;
-            advice += "\n🍞 Your carbohydrate intake is over 100%. Too many carbs can affect your overall balance.";
+            advice += "🍞 Your carbohydrate intake is over 100%. Too many carbs can affect your overall balance.\n";
         }
 
         if (hour >= 13 && hour < 18) {
 
             if (proteinPercentage < 30) {
-                advice += "💪 Your protein intake is below 30%. Consider adding more protein-rich foods like lean meats or legumes.";
+                advice += "💪 Your protein intake is below 30%. Consider adding more protein-rich foods like lean meats or legumes.\n";
             }
             if (fatPercentage < 30) {
-                advice += "\n🥑 Your fat intake is below 30%. Try including healthy fats like avocados, nuts, and olive oil.";
+                advice += "🥑 Your fat intake is below 30%. Try including healthy fats like avocados, nuts, and olive oil.\n";
             }
             if (carbsPercentage < 30) {
-                advice += "\n🍞 Your carbohydrate intake is below 30%. Consider adding more whole grains, fruits, and vegetables.";
+                advice += "🍞 Your carbohydrate intake is below 30%. Consider adding more whole grains, fruits, and vegetables.\n";
             }
 
             if (proteinPercentage > 60 && proteinPercentage <= 100) {
-                advice += "\n💪 Your protein intake is above 60%. Ensure you're not overdoing it!";
+                advice += "💪 Your protein intake is above 60%. Ensure you're not overdoing it!\n";
             }
             if (fatPercentage > 60 && fatPercentage <= 100) {
-                advice += "\n🥑 Your fat intake is above 60%. Make sure to balance your fat intake with healthy options.";
+                advice += "🥑 Your fat intake is above 60%. Make sure to balance your fat intake with healthy options.\n";
             }
             if (carbsPercentage > 60 && carbsPercentage <= 100) {
-                advice += "\n🍞 Your carbohydrate intake is above 60%. Keep an eye on your carb intake to avoid excess.";
+                advice += "🍞 Your carbohydrate intake is above 60%. Keep an eye on your carb intake to avoid excess.\n";
             }
 
         } else if (hour >= 18) {
 
             if (proteinPercentage < 70) {
-                advice += "💪 Your protein intake is below 70%. Make sure to include more protein sources before the day ends.";
+                advice += "💪 Your protein intake is below 70%. Make sure to include more protein sources before the day ends.\n";
             }
             if (fatPercentage < 70) {
-                advice += "\n🥑 Your fat intake is below 70%. Ensure you're getting enough healthy fats.";
+                advice += "🥑 Your fat intake is below 70%. Ensure you're getting enough healthy fats.\n";
             }
             if (carbsPercentage < 70) {
-                advice += "\n🍞 Your carbohydrate intake is below 70%. Add more carbs from whole grains, fruits, or vegetables.";
+                advice += "🍞 Your carbohydrate intake is below 70%. Add more carbs from whole grains, fruits, or vegetables.\n";
             }
 
 
         } else if(!isOver){
 
-            advice += "\n✅ You're on track with your macronutrients for the day!";
+            advice += "✅ You're on track with your macronutrients for the day!";
         }
 
     } else if (hour >= 13 && (dailyProtein === 0 || dailyFat === 0 || dailyCarbs === 0)) {
@@ -315,11 +281,7 @@ function getMacronutrientAdvice() {
 }
 
 window.onload = function () {
-    initChart();
     fetchUserData();
-    initMacronutrientCharts();
-    getNutritionTip();
 };
 
-// Add event listener for the confirm button
 document.getElementById("confirmButton").addEventListener("click", addProduct);

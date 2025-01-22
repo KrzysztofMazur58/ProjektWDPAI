@@ -23,7 +23,6 @@ class UserRepository {
                                     VALUES (:email, :password, :first_name, :last_name) 
                                     RETURNING id");
 
-            // Teraz przekazujemy zmienne do bindParam
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $password);
             $stmt->bindParam(':first_name', $firstName);
@@ -65,7 +64,8 @@ class UserRepository {
 
     public function getAllUsers() {
         try {
-            $stmt = $this->db->prepare("SELECT id, first_name, last_name, email FROM users");
+
+            $stmt = $this->db->prepare("SELECT id, first_name, last_name, email, joined_at FROM users");
             $stmt->execute();
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -75,6 +75,7 @@ class UserRepository {
             return [];
         }
     }
+
 
     public function deleteUserById(int $id)
     {

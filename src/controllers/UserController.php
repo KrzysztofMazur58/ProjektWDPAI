@@ -51,6 +51,8 @@ class UserController extends AppController {
 
             $this->userDetailsRepository->saveUserDetails($userDetails);
 
+            $_SESSION = array();
+            session_destroy();
             header('Location: /dashboard');
             exit();
         } else {
@@ -71,4 +73,22 @@ class UserController extends AppController {
 
         return true;
     }
+
+    public function myProfile() {
+        $userId = $this->getUserId();
+
+        if (!$userId) {
+            return $this->render('error', ['error' => 'User not authenticated.']);
+        }
+
+        // Pobieramy dane użytkownika z bazy danych
+        $userDetails = $this->userDetailsRepository->findByUserId($userId);
+
+        if ($userDetails) {
+            return $this->render('my_profile', ['user' => $userDetails]);
+        }
+
+        return $this->render('error', ['error' => 'No profile found for this user.']);
+    }
+
 }

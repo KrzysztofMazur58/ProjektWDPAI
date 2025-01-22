@@ -12,7 +12,7 @@
 
 </head>
 <body>
-<!-- Powrót do dashboardu -->
+
 <a href="/dashboard" class="back-btn">
     <i class="fas fa-arrow-left"></i>
 </a>
@@ -22,7 +22,8 @@
         <div class="user-card">
             <h3><?= htmlspecialchars($user['first_name']) . ' ' . htmlspecialchars($user['last_name']) ?></h3>
             <p>Email: <?= htmlspecialchars($user['email']) ?></p>
-            <!-- Przycisk usuwania -->
+            <p>Dołączył: <?= date('d-m-Y H:i', strtotime($user['joined_at'])) ?></p>
+
             <form action="/delete_user" method="POST" class="delete-form">
                 <input type="hidden" name="user_id" value="<?= htmlspecialchars($user['id']) ?>">
                 <button type="submit" class="delete-btn">

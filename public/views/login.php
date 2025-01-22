@@ -8,7 +8,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind&family=Jomhuria&family=Kaushan+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/public/styles/common.css">
     <link rel="stylesheet" href="/public/styles/login.css">
+
 </head>
 <body>
 <div class="container">
@@ -25,7 +27,6 @@
         <form action="/login" method="POST" class="login-form">
             <h2>Please, Log in</h2>
 
-            <!-- Sekcja na komunikat błędu -->
             <?php if (!empty($error)): ?>
                 <div class="error-message">
                     <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>

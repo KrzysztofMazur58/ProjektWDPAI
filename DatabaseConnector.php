@@ -7,7 +7,7 @@ class DatabaseConnector {
     private $password;
     private $host;
     private $database;
-    private static $instance = null; // Przechowuje jedyną instancję klasy
+    private static $instance = null;
     private $connection;
 
     private function __construct()
