@@ -44,7 +44,6 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 18px;
     align-items: center;
     justify-content: center;
     position: relative;
@@ -87,7 +86,7 @@ form{
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-#addedMealMessage {
+#addedMealMessage{
     color: #16fb54;
     display: none;
     background-color: #4CAF50;
@@ -96,7 +95,27 @@ form{
     align-items: center;
     font-weight: bold;
     position: absolute;
-    top: 70px;
+    top: 35px;
+}
+
+#nutritionalInfo {
+    display: none;
+    width: 70%;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #333;
+    padding: 15px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#nutritionalInfo p {
+    margin: 5px 0;
 }
 
 .modal-body button:hover {

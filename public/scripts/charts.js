@@ -91,16 +91,8 @@ function fetchUserData() {
         });
 }
 
-function addProduct() {
-    const productQuery = document.getElementById("productQuery").value;
-    const mealWeight = document.getElementById("mealWeight").value;
-
-    if (!productQuery || !mealWeight) {
-        alert("Please provide a product name and meal weight.");
-        return;
-    }
-
-    fetch('getCalories.php', {
+function fetchProductData(productQuery, mealWeight) {
+    return fetch('getCalories.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: productQuery })
@@ -116,28 +108,44 @@ function addProduct() {
 
                 if (apiServingWeight > 0) {
                     const scaleFactor = mealWeight / apiServingWeight;
-
-                    consumedCalories += Math.round(apiCalories * scaleFactor);
-                    consumedProtein += Math.round(apiProtein * scaleFactor);
-                    consumedFat += Math.round(apiFat * scaleFactor);
-                    consumedCarbs += Math.round(apiCarbs * scaleFactor);
-
-                    servingWeight = mealWeight;
+                    return {
+                        calories: Math.round(apiCalories * scaleFactor),
+                        protein: Math.round(apiProtein * scaleFactor),
+                        fat: Math.round(apiFat * scaleFactor),
+                        carbs: Math.round(apiCarbs * scaleFactor),
+                        servingWeight: mealWeight
+                    };
                 }
-
-                document.getElementById("remainingCalories").innerText =
-                    `${Math.round(consumedCalories)} / ${Math.round(dailyCalories)}`;
-
-                saveConsumedCalories();
-                updateCharts();
-                getMacronutrientAdvice();
-
-                const addedMealMessage = document.getElementById("addedMealMessage");
-                addedMealMessage.innerText = `Added product: ${productQuery}, serving weight: ${servingWeight}g`;
-                addedMealMessage.style.display = "block";
-            } else {
-                alert('Product not found.');
             }
+            throw new Error('Product not found.');
+        });
+}
+
+function addProduct(productQuery, mealWeight) {
+    if (!productQuery || !mealWeight) {
+        alert("Please provide both a product name and meal weight.");
+        return;
+    }
+
+    fetchProductData(productQuery, mealWeight)
+        .then(nutritionalInfo => {
+            consumedCalories += nutritionalInfo.calories;
+            consumedProtein += nutritionalInfo.protein;
+            consumedFat += nutritionalInfo.fat;
+            consumedCarbs += nutritionalInfo.carbs;
+
+            servingWeight = nutritionalInfo.servingWeight;
+
+            document.getElementById("remainingCalories").innerText =
+                `${Math.round(consumedCalories)} / ${Math.round(dailyCalories)}`;
+
+            saveConsumedCalories();
+            updateCharts();
+            getMacronutrientAdvice();
+
+            const addedMealMessage = document.getElementById("addedMealMessage");
+            addedMealMessage.innerText = `Added product: ${productQuery}, serving weight: ${servingWeight}g`;
+            addedMealMessage.style.display = "block";
         })
         .catch(error => {
             console.error('Error:', error);
@@ -280,8 +288,54 @@ function getMacronutrientAdvice() {
     document.getElementById("macronutrientAdvice").innerText = advice;
 }
 
+document.getElementById("checkButton").addEventListener("click", function () {
+    const productQuery = document.getElementById("productQuery").value;
+    const mealWeight = document.getElementById("mealWeight").value;
+
+    if (!productQuery || !mealWeight) {
+        alert("Please provide both a product name and meal weight.");
+        return;
+    }
+    
+    const addedMealMessage = document.getElementById("addedMealMessage");
+    addedMealMessage.style.display = "none";
+
+    fetchProductData(productQuery, mealWeight)
+        .then(nutritionalInfo => {
+            const nutritionalInfoElement = document.getElementById("nutritionalInfo");
+            nutritionalInfoElement.innerHTML = `
+                <p>Calories: ${nutritionalInfo.calories} kcal</p>
+                <p>Protein: ${nutritionalInfo.protein} g</p>
+                <p>Fat: ${nutritionalInfo.fat} g</p>
+                <p>Carbohydrates: ${nutritionalInfo.carbs} g</p>
+            `;
+            nutritionalInfoElement.style.display = "block";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was a problem fetching the product data.');
+        });
+});
+
+document.getElementById("confirmButton").addEventListener("click", function () {
+    const productQuery = document.getElementById("productQuery").value;
+    const mealWeight = document.getElementById("mealWeight").value;
+
+    if (!productQuery || !mealWeight) {
+        alert("Please provide both a product name and meal weight.");
+        return;
+    }
+
+    const nutritionalInfoElement = document.getElementById("nutritionalInfo");
+    nutritionalInfoElement.style.display = "none";
+
+    addProduct(productQuery, mealWeight);
+});
+
 window.onload = function () {
     fetchUserData();
 };
 
-document.getElementById("confirmButton").addEventListener("click", addProduct);
+
+
+

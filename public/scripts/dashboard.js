@@ -22,9 +22,6 @@ window.addEventListener("click", function () {
     }
 });
 
-const hamburgerMenu = document.querySelector('.hamburger-menu');
-const icons = document.querySelector('.icons');
-
 document.addEventListener('DOMContentLoaded', function () {
     const hamburgerMenu = document.querySelector('.hamburger-menu');
     const icons = document.querySelector('.icons');

@@ -95,7 +95,6 @@
     </div>
 </div>
 
-
 <div id="mealModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -104,15 +103,17 @@
 
         <div class="modal-body">
             <div id="addedMealMessage"></div>
+            <div id="nutritionalInfo"></div>
             <form id="addMealForm">
                 <input type="text" id="productQuery" placeholder="Meal Name" required>
                 <input type="number" id="mealWeight" name="mealWeight" placeholder="Meal Weight (g)" required>
+                <button type="button" id="checkButton">Check</button>
                 <button type="button" id="confirmButton">Confirm</button>
             </form>
-
         </div>
     </div>
 </div>
+
 
 <script src="public/scripts/dashboard.js"></script>
 <script src="public/scripts/charts.js"></script>

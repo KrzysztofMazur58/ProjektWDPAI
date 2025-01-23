@@ -11,7 +11,6 @@ class NutritionTipsRepository {
     }
 
     public function getRandomTipByTime($hour) {
-        error_log("Fetching tip for hour: $hour");
 
         $stmt = $this->db->prepare("
             SELECT tip, benefit 

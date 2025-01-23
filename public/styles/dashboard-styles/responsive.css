@@ -87,7 +87,7 @@
         align-items: center;
     }
 
-    .chart1 .chart-item .chart2 .chart-item{
+    .chart1 .chart-item, .chart2 .chart-item{
         width: 80%;
         margin-bottom: 15px;
     }

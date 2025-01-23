@@ -81,7 +81,6 @@ class UserController extends AppController {
             return $this->render('error', ['error' => 'User not authenticated.']);
         }
 
-        // Pobieramy dane użytkownika z bazy danych
         $userDetails = $this->userDetailsRepository->findByUserId($userId);
 
         if ($userDetails) {
