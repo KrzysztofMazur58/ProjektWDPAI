@@ -21,7 +21,6 @@ function drawChart(chartId, consumed, daily, color1, color2) {
 
     if (charts[chartId]) charts[chartId].destroy();
 
-    // Tworzymy nowy wykres
     charts[chartId] = new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -180,8 +179,6 @@ function saveConsumedCalories() {
 function getNutritionTip() {
     const hour = new Date().getHours();
 
-    console.log(`Current hour: ${hour}`);
-
     fetch(`nutri.php?hour=${hour}`)
         .then(response => {
 
@@ -296,7 +293,7 @@ document.getElementById("checkButton").addEventListener("click", function () {
         alert("Please provide both a product name and meal weight.");
         return;
     }
-    
+
     const addedMealMessage = document.getElementById("addedMealMessage");
     addedMealMessage.style.display = "none";
 

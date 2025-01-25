@@ -10,7 +10,7 @@ class UserSecurityRepository {
     }
 
     public function getUserRole($userId) {
-        // Zmodyfikowane zapytanie z priorytetem roli admin dla PostgreSQL
+
         $stmt = $this->db->prepare("SELECT r.role_name 
                                  FROM roles r
                                  JOIN user_roles ur ON r.id = ur.role_id
