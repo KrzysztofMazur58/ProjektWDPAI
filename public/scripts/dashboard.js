@@ -30,14 +30,12 @@ document.addEventListener('DOMContentLoaded', function () {
         event.stopPropagation();
 
         icons.classList.toggle('visible');
-        hamburgerMenu.classList.toggle('active');
         hamburgerMenu.classList.toggle('hidden');
     });
 
     window.addEventListener('click', function(event) {
         if (!hamburgerMenu.contains(event.target) && !icons.contains(event.target)) {
             icons.classList.remove('visible');
-            hamburgerMenu.classList.remove('active');
             hamburgerMenu.classList.remove('hidden');
         }
     });
