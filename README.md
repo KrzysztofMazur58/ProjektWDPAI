@@ -53,7 +53,7 @@ NutriTrack – Twoje zdrowie w Twoich rękach!
 
 ![DiagramERD](images/Diagram_ERD.png)
 
-W katalogu `init` znajduje się plik SQL o nazwie [bazaNutritrack.sql](init/bazaNutritrack.sql). Zawiera on strukturę bazy danych dla projektu.
+W katalogu `init` znajduje się plik SQL o nazwie [bazaNutritrack.sql](init/bazaNutriTrack.sql). Zawiera on strukturę bazy danych dla projektu.
 
 Widoki z działania aplikacji
 
