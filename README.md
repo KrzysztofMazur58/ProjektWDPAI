@@ -49,7 +49,47 @@ NutriTrack jest idealnym rozwiązaniem dla osób, które chcą w sposób zorgani
 
 NutriTrack – Twoje zdrowie w Twoich rękach!
 
+### Diagram ERD bazy danych:
 
+![DiagramERD](images/Diagram_ERD.png)
 
+W katalogu `init` znajduje się plik SQL o nazwie [bazaNutritrack.sql](init/bazaNutriTrack.sql). Zawiera on strukturę bazy danych dla projektu.
 
+Widoki z działania aplikacji
+
+### 1. Ekran logowania (login)
+![Login](images/login.png)
+
+### 2. Ekran rejestracji (register)
+![Register](images/register.png)
+
+### 3. Dashboard (dashboard)
+![Dashboard](images/dashboard.png)
+
+### 4. Szczegóły użytkownika (user_details)
+![User Details](images/user_details.png)
+
+### 5. Profil użytkownika (my_profile)
+![My Profile](images/my_profile.png)
+
+### 6. Dodawanie posiłku (add_meal)
+![Add Meal](images/add_meal.png)
+
+### 7. Widok mobilny logowania (login_mobile)
+![Login Mobile](images/login_mobile.png)
+
+### 8. Widok mobilny rejestracji (register_mobile)
+![Register Mobile](images/register_mobile.png)
+
+### 9. Widok mobilny dashboard (dashboard_mobile)
+![Dashboard Mobile](images/dashboard_mobile.png)
+
+### 10. Widok mobilny szczegółów użytkownika (user_details_mobile)
+![User Details Mobile](images/user_details_mobile.png)
+
+### 11. Widok mobilny profilu (my_profile_mobile)
+![My Profile Mobile](images/my_profile_mobile.png)
+
+### 12. Widok mobilny dodawania posiłku (add_meal_mobile)
+![Add Meal Mobile](images/add_meal_mobile.png)
 
