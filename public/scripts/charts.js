@@ -46,19 +46,14 @@ function drawChart(chartId, consumed, daily, color1, color2) {
 }
 
 function updateCharts() {
-
     drawChart('calorieChart', consumedCalories, dailyCalories, '#3AA0FE', '#0F0872');
     drawChart('proteinChart', consumedProtein, dailyProtein, '#3AA0FE', '#0F0872');
     drawChart('fatChart', consumedFat, dailyFat, '#3AA0FE', '#0F0872');
     drawChart('carbsChart', consumedCarbs, dailyCarbs, '#3AA0FE', '#0F0872');
-
 }
 
 function fetchUserData() {
-    fetch('getUserData.php', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-    })
+    fetch('get_user_data')  // Zmieniono na odpowiednią trasę dla metody getUserData
         .then(response => response.json())
         .then(data => {
             if (data.error) {
@@ -76,7 +71,6 @@ function fetchUserData() {
             dailyCarbs = data.daily_carbs || 0;
             consumedCarbs = data.consumed_carbs || 0;
 
-
             document.getElementById("remainingCalories").innerText =
                 `${Math.round(consumedCalories)} / ${Math.round(dailyCalories)}`;
 
@@ -91,7 +85,7 @@ function fetchUserData() {
 }
 
 function fetchProductData(productQuery, mealWeight) {
-    return fetch('getCalories.php', {
+    return fetch('get_meal_data', {  // Zmieniono na odpowiednią trasę dla metody getMealData
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: productQuery })
@@ -153,11 +147,10 @@ function addProduct(productQuery, mealWeight) {
 }
 
 function saveConsumedCalories() {
-    fetch('updateCalories.php', {
+    fetch('update_user_data', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            user_id: userId,
             consumedCalories,
             consumedProtein,
             consumedFat,
@@ -179,17 +172,12 @@ function saveConsumedCalories() {
 function getNutritionTip() {
     const hour = new Date().getHours();
 
-    fetch(`nutri.php?hour=${hour}`)
-        .then(response => {
-
-            return response.json();
-        })
+    fetch(`get_nutrition_tip?hour=${hour}`)
+        .then(response => response.json())
         .then(data => {
-
             if (data.error) {
                 console.error('API Error:', data.error);
             } else {
-
                 document.getElementById("nutritionTip").innerText = data.tip;
                 document.getElementById("nutritionBenefit").innerText = data.benefit;
             }
@@ -203,70 +191,42 @@ function getMacronutrientAdvice() {
     let advice = "";
     const hour = new Date().getHours();
 
-    if (dailyProtein && dailyFat && dailyCarbs && consumedProtein >= 0 && consumedFat >= 0 && consumedCarbs >= 0) {
+    const macronutrientConditions = {
+        protein: [
+            { condition: (value) => value > 100, advice: "💪 Your protein intake is over 100%. You may want to adjust your protein intake to avoid excess." },
+            { condition: (value) => value < 30, advice: "💪 Your protein intake is below 30%. Consider adding more protein-rich foods like lean meats or legumes." },
+            { condition: (value) => value > 60 && value <= 100, advice: "💪 Your protein intake is above 60%. Ensure you're not overdoing it!" }
+        ],
+        fat: [
+            { condition: (value) => value > 100, advice: "🥑 Your fat intake is over 100%. Be cautious with your fat intake to prevent overconsumption." },
+            { condition: (value) => value < 30, advice: "🥑 Your fat intake is below 30%. Try including healthy fats like avocados, nuts, and olive oil." },
+            { condition: (value) => value > 60 && value <= 100, advice: "🥑 Your fat intake is above 60%. Make sure to balance your fat intake with healthy options." }
+        ],
+        carbs: [
+            { condition: (value) => value > 100, advice: "🍞 Your carbohydrate intake is over 100%. Too many carbs can affect your overall balance." },
+            { condition: (value) => value < 30, advice: "🍞 Your carbohydrate intake is below 30%. Consider adding more whole grains, fruits, and vegetables." }
+        ]
+    };
 
+    if (dailyProtein && dailyFat && dailyCarbs && consumedProtein >= 0 && consumedFat >= 0 && consumedCarbs >= 0) {
         const proteinPercentage = (consumedProtein / dailyProtein) * 100;
         const fatPercentage = (consumedFat / dailyFat) * 100;
         const carbsPercentage = (consumedCarbs / dailyCarbs) * 100;
-        let isOver;
+        let isOver = false;
 
         console.log('Protein:', proteinPercentage, 'Fat:', fatPercentage, 'Carbs:', carbsPercentage);
 
-        if (proteinPercentage > 100) {
-            isOver = true;
-            advice += "💪 Your protein intake is over 100%. You may want to adjust your protein intake to avoid excess.\n";
-        }
-        if (fatPercentage > 100) {
-            isOver = true;
-            advice += "🥑 Your fat intake is over 100%. Be cautious with your fat intake to prevent overconsumption.\n";
-        }
-        if (carbsPercentage > 100) {
-            isOver = true;
-            advice += "🍞 Your carbohydrate intake is over 100%. Too many carbs can affect your overall balance.\n";
-        }
-
-        if (hour >= 13 && hour < 18) {
-
-            if (proteinPercentage < 30) {
-                advice += "💪 Your protein intake is below 30%. Consider adding more protein-rich foods like lean meats or legumes.\n";
-            }
-            if (fatPercentage < 30) {
-                advice += "🥑 Your fat intake is below 30%. Try including healthy fats like avocados, nuts, and olive oil.\n";
-            }
-            if (carbsPercentage < 30) {
-                advice += "🍞 Your carbohydrate intake is below 30%. Consider adding more whole grains, fruits, and vegetables.\n";
-            }
-
-            if (proteinPercentage > 60 && proteinPercentage <= 100) {
-                advice += "💪 Your protein intake is above 60%. Ensure you're not overdoing it!\n";
-            }
-            if (fatPercentage > 60 && fatPercentage <= 100) {
-                advice += "🥑 Your fat intake is above 60%. Make sure to balance your fat intake with healthy options.\n";
-            }
-            if (carbsPercentage > 60 && carbsPercentage <= 100) {
-                advice += "🍞 Your carbohydrate intake is above 60%. Keep an eye on your carb intake to avoid excess.\n";
-            }
-
-        } else if (hour >= 18) {
-
-            if (proteinPercentage < 70) {
-                advice += "💪 Your protein intake is below 70%. Make sure to include more protein sources before the day ends.\n";
-            }
-            if (fatPercentage < 70) {
-                advice += "🥑 Your fat intake is below 70%. Ensure you're getting enough healthy fats.\n";
-            }
-            if (carbsPercentage < 70) {
-                advice += "🍞 Your carbohydrate intake is below 70%. Add more carbs from whole grains, fruits, or vegetables.\n";
-            }
-
-
-        } else if(!isOver){
-
-            advice += "✅ You're on track with your macronutrients for the day!";
-        }
+        ['protein', 'fat', 'carbs'].forEach(nutrient => {
+            macronutrientConditions[nutrient].forEach(cond => {
+                const nutrientPercentage = window[nutrient + 'Percentage'] || 0;
+                if (cond.condition(nutrientPercentage)) {
+                    advice += cond.advice + "\n";
+                    if (cond.condition === macronutrientConditions[nutrient][0].condition) isOver = true;
+                }
+            });
+        });
 
     } else if (hour >= 13 && (dailyProtein === 0 || dailyFat === 0 || dailyCarbs === 0)) {
-
         if (dailyProtein === 0) {
             advice += "💪 Your protein intake is below 30%. Consider adding more protein-rich foods like lean meats or legumes.";
         }
@@ -277,13 +237,13 @@ function getMacronutrientAdvice() {
             advice += "\n🍞 Your carbohydrate intake is below 30%. Consider adding more whole grains, fruits, and vegetables.";
         }
     } else {
-
         advice = "❗ Data is missing or invalid. Please try again.";
     }
 
     console.log('Macronutrient Advice:', advice);
     document.getElementById("macronutrientAdvice").innerText = advice;
 }
+
 
 document.getElementById("checkButton").addEventListener("click", function () {
     const productQuery = document.getElementById("productQuery").value;
@@ -332,6 +292,7 @@ document.getElementById("confirmButton").addEventListener("click", function () {
 window.onload = function () {
     fetchUserData();
 };
+
 
 
 
