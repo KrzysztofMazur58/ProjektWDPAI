@@ -49,7 +49,9 @@ NutriTrack jest idealnym rozwiązaniem dla osób, które chcą w sposób zorgani
 
 NutriTrack – Twoje zdrowie w Twoich rękach!
 
+Diagram ERD bazy danych:
 
+![DiagramERD](images/Diagram_ERD.png)
 
 
 
